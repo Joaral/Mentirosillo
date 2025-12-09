@@ -4,3 +4,6 @@
 
 [node name="Globals" type="Node"]
 script = ExtResource("1_f6yec")
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+autoplay = true

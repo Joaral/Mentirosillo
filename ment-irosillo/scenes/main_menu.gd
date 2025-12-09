@@ -5,19 +5,19 @@ var variable:int = 33
 
 
 func _on_play_button_pressed() -> void:
-	var name:String = $Name.text
+	var player_name:String = $Name.text
 	
-	if name == "":
+	if player_name == "":
 		$InfoLabel.text = "Introduce un nombre"
 		return
 	#while variable > 0:
 		#print(variable)
 		#variable -=1
-	var id_user = DataBase.insert_user(name)
+	var id_user = DataBase.insert_user(player_name)
 	if id_user <= 0:
 		push_error("ERROR: Al insertar en la base de datos")
 		return
-	Globals.username = name
+	Globals.username = player_name
 	
 
 	get_tree().change_scene_to_file("res://scenes/stage.tscn")

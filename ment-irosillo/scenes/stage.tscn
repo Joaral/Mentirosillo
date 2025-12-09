@@ -1,13 +1,15 @@
-[gd_scene load_steps=15 format=3 uid="uid://8pqgrnd6lwrg"]
+[gd_scene load_steps=17 format=3 uid="uid://8pqgrnd6lwrg"]
 
 [ext_resource type="PackedScene" uid="uid://buwbn7odiqhs7" path="res://scenes/player.tscn" id="1_8rem4"]
 [ext_resource type="PackedScene" uid="uid://cwi56ftenk66m" path="res://scenes/Arbusto1.tscn" id="1_kewym"]
+[ext_resource type="Script" uid="uid://baiipu6a6gkd2" path="res://scenes/stage.gd" id="1_yd2gm"]
 [ext_resource type="PackedScene" uid="uid://crhmpaiesw46r" path="res://scenes/arbusto2.tscn" id="2_1hwpr"]
 [ext_resource type="PackedScene" uid="uid://d0e2evxpykh5x" path="res://scenes/grass2.tscn" id="3_dexii"]
 [ext_resource type="PackedScene" uid="uid://c12wpxuxjh2se" path="res://scenes/grass.tscn" id="4_yd2gm"]
 [ext_resource type="PackedScene" uid="uid://doavaer2ev1wd" path="res://scenes/stone.tscn" id="5_0hg5s"]
 [ext_resource type="PackedScene" uid="uid://cyic8yatnueq0" path="res://scenes/stone2.tscn" id="6_jl6nj"]
 [ext_resource type="PackedScene" uid="uid://yjg0oy5gew2o" path="res://scenes/power_up.tscn" id="8_1hwpr"]
+[ext_resource type="PackedScene" uid="uid://bad2gcfjo0vgt" path="res://scenes/hud.tscn" id="10_0hg5s"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_8rem4"]
 sky_top_color = Color(0.8862745, 0.5764706, 1, 1)
@@ -36,6 +38,7 @@ size = Vector3(100, 0.1, 100)
 size = Vector3(100, 0.1, 100)
 
 [node name="Stage" type="Node3D"]
+script = ExtResource("1_yd2gm")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.5459598, 0.5147573, -0.6610241, -0.8363599, -0.28843316, 0.46616405, 0.04930007, 0.80736077, 0.58799523, 0, -2.952283, 0)
@@ -199,3 +202,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.058222, 0.049999237, -37.
 
 [node name="PowerUp5" parent="." instance=ExtResource("8_1hwpr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.446857, 0.049999237, -14.294807)
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="hud" parent="." instance=ExtResource("10_0hg5s")]
