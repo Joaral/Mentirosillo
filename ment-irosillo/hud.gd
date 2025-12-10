@@ -1,4 +1,3 @@
-# hud.gd
 extends CanvasLayer
 
 @onready var coins_label = $MarginContainer/VBoxContainer/CoinsLabel
@@ -9,7 +8,9 @@ extends CanvasLayer
 
 func _ready():
 	game_over_panel.visible = false
+	
 	restart_button.pressed.connect(_on_restart_pressed)
+	
 	update_ui()
 
 func update_ui():
@@ -17,6 +18,8 @@ func update_ui():
 	time_label.text = "Time: " + str(Globals.countdown) + "s"
 
 func show_game_over():
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	
 	game_over_panel.visible = true
 	game_over_label.bbcode_enabled = true
 	game_over_label.text = "[center][wave amp=50 freq=2][color=red]GAME OVER[/color][/wave]
@@ -24,4 +27,5 @@ func show_game_over():
 
 func _on_restart_pressed():
 	get_tree().paused = false
+	Globals.game_restart()
 	get_tree().reload_current_scene()

@@ -1,17 +1,34 @@
 extends Node3D
 
 
+
 @onready var timer = $Timer
 @onready var hud = $hud
 
+var frases = [
+	"Sigue tus sueños",
+	"Tienes 2 neuronas luchando por el tercer lugar",
+	"No eres GAY",
+	"Te pareces a Sam, eres votasnte de VOX",
+	"No eres adoptado, eres su mascota",
+	"Te quiero"
+]
+
 func _ready():
-	Globals.coins = 0
-	Globals.countdown = 60
-	
 	timer.timeout.connect(_on_timer_timeout)
 	timer.start()
 	
 	hud.update_ui()
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	for power_up in $Powerups.get_children():
+		power_up.suelta_frase.connect(_on_suelta_frase())
+
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("ui_cancel"):
+		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func _on_timer_timeout():
 	Globals.countdown -= 1
@@ -21,35 +38,16 @@ func _on_timer_timeout():
 		timer.stop()
 		game_over()
 
+
 func game_over():
 	hud.show_game_over()
 	
-	save_score_to_database()
+	DataBase.save_score ()
 
-func save_score_to_database():
-	if DataBase.id_user <= 0:
-		push_error("ERROR: No hay usuario activo")
-		return
-	
-	var create_table = "
-	CREATE TABLE IF NOT EXISTS scores (
-		id_score INTEGER PRIMARY KEY AUTOINCREMENT,
-		id_user INTEGER NOT NULL,
-		coins INTEGER NOT NULL,
-		game_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-		FOREIGN KEY (id_user) REFERENCES users(id_user)
-	);
-	"
-	DataBase.db.query(create_table)
-	
-	var insert_query = "
-	INSERT INTO scores (id_user, coins) 
-	VALUES (%d, %d)
-	" % [DataBase.id_user, Globals.coins]
-	
-	DataBase.db.query(insert_query)
-	
-	if DataBase.db.query_result.size() > 0:
-		print("Score guardado: ", Globals.coins, " coins")
-	else:
-		print("Error al guardar score")
+func _on_suelta_frase():
+	var frase = frases.pick_random()
+	$hud/Verdades.text = "[rainbow][tornado]"+ frase +"[rainbow][tornado]"
+
+func _on_power_ups_you_win() -> void:
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	$You_win.visible = true

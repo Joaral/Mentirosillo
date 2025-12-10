@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://beai3q5qpujr4"]
+[gd_scene load_steps=4 format=3 uid="uid://beai3q5qpujr4"]
 
 [ext_resource type="Script" uid="uid://b85urpln6hkbk" path="res://scenes/main_menu.gd" id="1_l6cm7"]
+[ext_resource type="PackedScene" uid="uid://jdp0anxr2hvg" path="res://scenes/background.tscn" id="2_ekxnf"]
+[ext_resource type="PackedScene" uid="uid://d0cxx168q8shn" path="res://scenes/preferences.tscn" id="3_bqqt6"]
 
 [node name="Main Menu" type="Control"]
 layout_mode = 3
@@ -10,6 +12,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_l6cm7")
+
+[node name="Background" type="CanvasLayer" parent="."]
+
+[node name="Background" parent="Background" instance=ExtResource("2_ekxnf")]
 
 [node name="NameLabel" type="Label" parent="."]
 layout_mode = 1
@@ -77,4 +83,62 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 32
 text = "JUGAR"
 
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 146.0
+theme_override_font_sizes/normal_font_size = 78
+bbcode_enabled = true
+text = "[center][wave][rainbow]Mentirosillo"
+
+[node name="RecordsButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -111.0
+offset_right = 257.0
+offset_bottom = -16.0
+grow_vertical = 0
+text = "Records"
+
+[node name="ButtonExit" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -155.0
+offset_top = -83.0
+offset_right = -32.0
+offset_bottom = -24.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Exit
+"
+
+[node name="ButtonPreferences" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -155.0
+offset_top = -257.0
+offset_right = -32.0
+offset_bottom = -198.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Settings"
+
+[node name="Preferences" parent="." instance=ExtResource("3_bqqt6")]
+visible = false
+layout_mode = 1
+
+[connection signal="text_submitted" from="Name" to="." method="_on_name_text_submitted"]
 [connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="ButtonExit" to="." method="_on_button_exit_pressed"]
+[connection signal="pressed" from="ButtonPreferences" to="." method="_on_button_preferences_pressed"]
